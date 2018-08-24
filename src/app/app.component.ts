@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Observable, of, merge } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +14,40 @@ export class AppComponent {
   messages: string[] = [];
   msg = '';
   smily = '&#x1F642';
+  online: Observable<any>;
+  isonline: boolean;
   // Establish the WebSocket connection and set up event handlers
-  readonly webSocket = new WebSocket('ws://localhost:4567/chat');
+  webSocket;
 
   constructor(@Inject(DOCUMENT) private document: any) {
+    this.online = merge(
+      of(navigator.onLine),
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false))
+    );
+    this.online.subscribe(online => {
+      if (online) {
+        this.isonline = true;
+        this.initializeSocket();
+      } else {
+        this.isonline = false;
+      }
+    });
+  }
+
+  initializeSocket(): any {
+    console.log('initializing web socket');
+    this.webSocket = new WebSocket('ws://localhost:4567/chat');
     fromEvent(this.webSocket, 'message')
       .subscribe(msg => this.updateChat(msg));
 
     fromEvent(this.webSocket, 'close')
-      .subscribe(() => alert('WebSocket connection closed'));
+      .subscribe(() => {
+        if (this.isonline) {
+          console.log('trying to reconnect');
+          this.initializeSocket();
+        }
+      });
   }
 
   send() {
