@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <ul id="userlist">
+    <li *ngFor="let u of userList">{{u}}</li>
+  </ul>
+  <div id="chat">
+    <div id="msgs">
+      <article *ngFor="let m of messages">
+        <b>{{m.sender}}</b>
+        <span class="timestamp">{{m.timestamp}}</span>
+        <p [innerHTML]="m.message | sanitize"></p>
+      </article>
+      <div id="scroll"></div>
+    </div>
+  </div>
+</div>
+<div id="chatControls">
+  <div class="input-group">
+    <div class="input-group-prepend clip">
+      <span class="input-group-text " [innerHTML]="smily"></span>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="msg" (keydown.enter)="message()" placeholder="Type your message" autocomplete="off">
+    <div class="input-group-prepend">
+      <div class="input-group-text clip">
+        <i class="fa fa-paperclip"></i>
+      </div>
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()">send</button>
+    </div>
+  </div>
+</div>
