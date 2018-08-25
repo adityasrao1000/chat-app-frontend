@@ -1,7 +1,7 @@
 <div class="wrapper">
-  <ul id="userlist">
-    <li *ngFor="let u of userList">{{u}}</li>
-  </ul>
+  <div class="users" *ngIf="userList.length > 0">
+    <p><i class="fa fa-circle"></i> &nbsp; <span *ngFor="let u of userList">{{u}} </span></p>
+  </div>
   <div id="chat">
     <div id="msgs">
       <article *ngFor="let m of messages">

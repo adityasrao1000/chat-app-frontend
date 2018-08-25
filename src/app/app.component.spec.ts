@@ -1,27 +1,58 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { SanitizeHtmlPipe } from './pipes/sanitize.pipe';
+import { FormsModule } from '@angular/forms';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ FormsModule],
       declarations: [
-        AppComponent
+        AppComponent,
+        SanitizeHtmlPipe
       ],
     }).compileComponents();
   }));
+
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
+
+  it('should try to reestablish connection 3 times ', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+    app.isonline = true;
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to angular-chat!');
+    setTimeout(() => expect(app.retry).toBeLessThanOrEqual(4), 4000);
+  }));
+
+  it('should call sendMessage', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    spyOn(app, 'sendMessage').and.returnValue(true);
+    app.send();
+    fixture.detectChanges();
+    expect(app.sendMessage).toHaveBeenCalled();
+  }));
+
+  it('message() should call sendMessage', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    const spy = spyOn(app, 'sendMessage').and.returnValue(true);
+    app.message();
+    fixture.detectChanges();
+    expect(app.sendMessage).toHaveBeenCalled();
+  }));
+
+  it('message() should call sendMessage', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    const spy = spyOn(app.webSocket, 'send').and.returnValue(true);
+    app.isonline = true;
+    app.sendMessage('hi');
+    fixture.detectChanges();
+    expect(app.webSocket.send).toHaveBeenCalled();
   }));
 });

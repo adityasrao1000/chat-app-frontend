@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { fromEvent, Observable, of, merge } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import { fromEvent, Observable, of, merge, interval } from 'rxjs';
+import { mapTo, retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +16,10 @@ export class AppComponent {
   smily = '&#x1F642';
   online: Observable<any>;
   isonline: boolean;
+  emojis = ['&#x1F911'];
   // Establish the WebSocket connection and set up event handlers
-  webSocket;
-
+  webSocket: WebSocket;
+  retry = 1;
   constructor(@Inject(DOCUMENT) private document: any) {
     this.online = merge(
       of(navigator.onLine),
@@ -44,8 +45,11 @@ export class AppComponent {
     fromEvent(this.webSocket, 'close')
       .subscribe(() => {
         if (this.isonline) {
-          console.log('trying to reconnect');
-          this.initializeSocket();
+          if (this.retry <= 3) {
+            console.log('trying to reconnect, attempt: ' + this.retry);
+            this.retry++;
+            this.initializeSocket();
+          }
         }
       });
   }

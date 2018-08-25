@@ -32,18 +32,16 @@ li {
   margin: 0 0 5px 0
 }
 
-#userlist {
+.users {
   position: fixed;
-  left: 50%;
-  list-style: none;
-  margin-left: 250px;
-  background: #f0f0f9;
-  padding: 5px 10px;
-  width: 150px;
-  top: 11px;
+  top: 0;
+  height: 6%;
+  .fa-circle{
+    color: rgb(65, 245, 65);
+  }
 }
 
-.clip{
+.clip {
   margin-top: 5px;
   height: 100%;
   background: inherit;
@@ -52,7 +50,11 @@ li {
 }
 
 #chat {
-  height: 92%;
+  position: fixed;
+  width: 100%;
+  margin-top: 30px;
+  height: 86%;
+  padding-right: 1em;
   overflow-y: auto;
   overflow-x: hidden;
 }
