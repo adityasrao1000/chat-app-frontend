@@ -15,17 +15,22 @@
           </div>
         </div>
         <ng-template #other_content>
-          <article>
+          
+          <article *ngIf=" m.type === 'text';else other_content2">
             <b>{{m.sender}}</b>
             <span class="timestamp">{{m.timestamp}}</span>
             <p [innerHTML]="m.message | sanitize"></p>
           </article>
+          <ng-template #other_content2>
+            <img class="img-fluid" [src]="m | safeurl" (load)="imageLoad()">
+          </ng-template>
         </ng-template>
       </div>
       <div id="scroll"></div>
     </div>
   </div>
 </div>
+<input type="file" id="file" [style.display]="'none'">
 <div id="chatControls">
   <div class="input-group">
     <div class="input-group-prepend clip">
@@ -34,7 +39,7 @@
     <input type="text" class="form-control" [(ngModel)]="msg" (keydown.enter)="message()" placeholder="Type your message" autocomplete="off">
     <div class="input-group-prepend">
       <div class="input-group-text clip">
-        <i class="fa fa-paperclip"></i>
+        <i class="fa fa-paperclip" (click)="fileClick()"></i>
       </div>
     </div>
     <div class="input-group-append">

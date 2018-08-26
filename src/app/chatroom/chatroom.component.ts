@@ -1,14 +1,14 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, AfterViewInit } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { fromEvent, Observable, of, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     templateUrl: './chatroom.component.html',
     styleUrls: ['./chatroom.component.scss']
 })
-export class ChatRoomComponent {
+export class ChatRoomComponent implements AfterViewInit {
 
     userList: string[] = [];
     messages: string[] = [];
@@ -39,6 +39,17 @@ export class ChatRoomComponent {
                 this.isonline = false;
             }
         });
+    }
+
+    ngAfterViewInit() {
+        fromEvent(this.document.getElementById('file'), 'change')
+            .subscribe(() => {
+                this.webSocket.send(this.document.getElementById('file').files[0]);
+            });
+    }
+
+    fileClick() {
+        this.document.getElementById('file').click();
     }
 
     initializeSocket(): any {
@@ -75,8 +86,16 @@ export class ChatRoomComponent {
         }
     }
 
+    imageLoad() {
+        this.document.getElementById('scroll').scrollIntoView(true);
+    }
+
     // Update the chat-panel, and the list of connected users
     updateChat(msg) {
+        if (msg.data instanceof Blob) {
+            this.messages.push(window.URL.createObjectURL(msg.data));
+            return;
+        }
         const data = JSON.parse(msg.data);
         this.messages.push(data);
         this.userList = [];

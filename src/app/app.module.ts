@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { SanitizeHtmlPipe } from './pipes/sanitize.pipe';
 import { ChatRoomComponent } from './chatroom/chatroom.component';
 import { AppRoutingModule } from './app.routing.module';
+import { SafeURLPipe } from './pipes/safeurl.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatRoomComponent,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    SafeURLPipe
   ],
   imports: [
     BrowserModule,
