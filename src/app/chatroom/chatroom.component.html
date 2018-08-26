@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <div class="users" *ngIf="userList.length > 0">
+    <p>
+      <i class="fa fa-circle"></i> &nbsp;
+      <span class="username" *ngFor="let u of userList"> {{u}}</span>
+    </p>
+  </div>
+  <div id="chat">
+    <div id="msgs">
+      <div *ngFor="let m of messages">
+        <div *ngIf=" m.sender === 'Server';else other_content">
+          <div style="width: 100%; border-radius: .6em; margin: 1em 0em; background-color: rgb(182, 255, 182); text-align: center">
+             <p>{{m.message}}</p>
+             <p style="margin-top: -5px">{{m.timestamp}}</p>
+          </div>
+        </div>
+        <ng-template #other_content>
+          <article>
+            <b>{{m.sender}}</b>
+            <span class="timestamp">{{m.timestamp}}</span>
+            <p [innerHTML]="m.message | sanitize"></p>
+          </article>
+        </ng-template>
+      </div>
+      <div id="scroll"></div>
+    </div>
+  </div>
+</div>
+<div id="chatControls">
+  <div class="input-group">
+    <div class="input-group-prepend clip">
+      <span class="input-group-text " [innerHTML]="smily"></span>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="msg" (keydown.enter)="message()" placeholder="Type your message" autocomplete="off">
+    <div class="input-group-prepend">
+      <div class="input-group-text clip">
+        <i class="fa fa-paperclip"></i>
+      </div>
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()">send</button>
+    </div>
+  </div>
+</div>
