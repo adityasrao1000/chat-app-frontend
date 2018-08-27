@@ -20,10 +20,21 @@ export class ChatRoomComponent implements AfterViewInit {
     webSocket: WebSocket;
     retry = 1;
     chatroom: string;
-
+    unread_msg_count: number;
+    focus;
     constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
-
+        // initialize variables
+        this.unread_msg_count = 0;
         this.msg = '';
+
+        merge(
+            fromEvent(window, 'focus').pipe(mapTo(true))
+        ).subscribe(val => {
+            if (val) {
+                this.document.title = this.unread_msg_count = 0;
+            }
+        });
+
         this.route.paramMap.subscribe(params => {
             this.chatroom = params.get('id');
         });
@@ -123,6 +134,12 @@ export class ChatRoomComponent implements AfterViewInit {
      * @param msg
     */
     updateChat(msg) {
+        if (this.document.hasFocus()) {
+            this.document.title = this.unread_msg_count = 0;
+        } else {
+            this.document.title = ++this.unread_msg_count;
+        }
+
         if (msg.data instanceof Blob) {
             this.messages.push(window.URL.createObjectURL(msg.data));
             return;
