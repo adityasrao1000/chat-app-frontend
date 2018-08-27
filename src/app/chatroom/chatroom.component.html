@@ -36,7 +36,7 @@
     <div class="input-group-prepend clip">
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>
-    <input type="text" class="form-control" [(ngModel)]="msg" (keydown.enter)="sends()" placeholder="Type your message" autocomplete="off">
+    <input type="text" class="form-control" [(ngModel)]="msg" (keydown.enter)="send()" placeholder="Type your message" autocomplete="off">
     <div class="input-group-prepend">
       <div class="input-group-text clip">
         <i class="fa fa-paperclip" (click)="fileClick()"></i>

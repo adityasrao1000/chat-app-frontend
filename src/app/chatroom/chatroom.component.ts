@@ -24,8 +24,8 @@ export class ChatRoomComponent implements AfterViewInit {
     constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
 
         this.msg = '';
-        this.route.params.subscribe(params => {
-            this.chatroom = params['id'];
+        this.route.paramMap.subscribe(params => {
+            this.chatroom = params.get('id');
         });
 
         this.online = merge(
