@@ -17,7 +17,6 @@ export class ChatRoomComponent implements AfterViewInit {
     online: Observable<boolean>;
     isonline: boolean;
     emojis = ['&#x1F911'];
-    // Establish the WebSocket connection and set up event handlers
     webSocket: WebSocket;
     retry = 1;
     chatroom: string;
