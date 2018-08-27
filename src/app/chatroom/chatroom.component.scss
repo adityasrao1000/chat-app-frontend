@@ -97,6 +97,14 @@ li {
   animation: enter .2s 1;
 }
 
+.server-message {
+  width: 100%;
+  border-radius: .6em;
+  margin: 1em 0em;
+  background-color: rgb(182, 255, 182);
+  text-align: center;
+}
+
 @keyframes enter {
   from {
     transform: none;

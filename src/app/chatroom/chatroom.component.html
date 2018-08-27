@@ -9,7 +9,7 @@
     <div id="msgs">
       <div *ngFor="let m of messages">
         <div *ngIf=" m.sender === 'Server';else other_content">
-          <div style="width: 100%; border-radius: .6em; margin: 1em 0em; background-color: rgb(182, 255, 182); text-align: center">
+          <div class="server-message">
              <p>{{m.message}}</p>
              <p style="margin-top: -5px">{{m.timestamp}}</p>
           </div>
@@ -30,7 +30,7 @@
     </div>
   </div>
 </div>
-<input type="file" id="file" [style.display]="'none'">
+<input type="file" id="file" accept="image/*" [style.display]="'none'">
 <div id="chatControls">
   <div class="input-group">
     <div class="input-group-prepend clip">
