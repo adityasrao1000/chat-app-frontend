@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { ChatRoomComponent } from './chatroom/chatroom.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/chatroom/chat', pathMatch: 'full' },
-  { path: 'chatroom/:id', component: ChatRoomComponent }
+  { path: '', redirectTo: '/chatroom/chat/aditya', pathMatch: 'full' },
+  { path: 'chatroom/:id/:name', component: ChatRoomComponent }
 ];
 @NgModule({
   imports: [

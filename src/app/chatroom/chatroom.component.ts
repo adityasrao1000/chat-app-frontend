@@ -24,6 +24,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     chatroom: string;
     unread_msg_count: number;
     focus;
+    username: string;
     constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
         // initialize variables
         this.unread_msg_count = 0;
@@ -40,6 +41,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
 
         this.route.paramMap.subscribe(params => {
             this.chatroom = params.get('id');
+            this.username = params.get('name');
         });
 
         this.online = merge(
@@ -94,7 +96,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     initializeSocket() {
         if ('WebSocket' in window) {
             console.log('initializing web socket');
-            this.webSocket = new WebSocket(`ws://localhost:4567/${this.chatroom}`);
+            this.webSocket = new WebSocket(`ws://localhost:4567/${this.chatroom}?name=${this.username}`);
 
             /**
              * event listener fires when the socket recieves a message from the server
