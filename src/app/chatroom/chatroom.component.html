@@ -22,7 +22,7 @@
             <p [innerHTML]="m.message | sanitize"></p>
           </article>
           <ng-template #other_content2>
-            <img class="img-fluid" [src]="m | safeurl" (load)="imageLoad()">
+            <img class="img-fluid" [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
           </ng-template>
         </ng-template>
       </div>

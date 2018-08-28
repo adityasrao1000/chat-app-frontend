@@ -39,6 +39,9 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             this.document.title = 'chat';
         });
 
+        /**
+         * initialize variables with router path values
+         */
         this.route.paramMap.subscribe(params => {
             this.chatroom = params.get('id');
             this.username = params.get('name');
@@ -169,11 +172,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     updateChat(msg) {
         // check if tab is currently in focus
         this.tabInFocus();
-
-        if (msg.data instanceof Blob) {
-            this.messages.push(window.URL.createObjectURL(msg.data));
-            return;
-        }
         const data = JSON.parse(msg.data);
         this.messages.push(data);
         this.userList = [];
