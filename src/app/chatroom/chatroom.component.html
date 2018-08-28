@@ -33,7 +33,12 @@
 <input type="file" id="file" accept="image/*" [style.display]="'none'">
 <div id="chatControls">
   <div class="input-group">
-    <div class="input-group-prepend clip">
+    <div class="input-group-prepend clip smily">
+      <div class="emojis-menu">
+        <div class="emoji" *ngFor="let e of emojis">
+          <p><span [innerHTML]="e" (click)="addEmoji(e)"></span></p>
+        </div>
+      </div>
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>
     <input type="text" class="form-control" [(ngModel)]="msg" (keydown.enter)="send()" placeholder="Type your message" autocomplete="off">

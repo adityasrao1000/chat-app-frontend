@@ -29,7 +29,10 @@ li {
   background-clip: grey;
   display: flex;
   width: 100%;
-  margin: 0 0 5px 0
+  margin: 0 0 5px 0;
+  .fa-paperclip {
+    cursor: pointer;
+  }
 }
 
 .users {
@@ -95,6 +98,40 @@ li {
   background: #c9edc3;
   border-left-color: #74a377;
   animation: enter .2s 1;
+}
+
+.smily {
+  cursor: pointer;
+  &:hover .emojis-menu {
+    display: block;
+  }
+}
+
+.emojis-menu {
+  position: fixed;
+  cursor: context-menu;
+  display: none;
+  bottom: 52px;
+  border-radius: .5em;
+  height: 200px;
+  width: 200px;
+  z-index: 2;
+  overflow-y: auto;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(153, 145, 153, 1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(153, 145, 153, 1);
+  box-shadow: 0px 0px 5px 0px rgba(153, 145, 153, 1);
+  .emoji {
+    width: 25%;
+    height: 20%;
+    display: inline-block;
+    p {
+      width: 100%;
+      text-align: center;
+      span {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .server-message {
