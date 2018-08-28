@@ -17,7 +17,8 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     online: Observable<boolean>;
     isonline: boolean;
     emojis = ['&#x1F911', '&#x1F642', '&#x1F600', '&#x1F601', '&#x1F602', '&#x1F603', '&#x1F604', '&#x1F605', '&#x1F606', '&#x1F607',
-        '&#x1F608', '&#x1F609', '&#x1F60A', '&#x1F60B', '&#x1F60C', '&#x1F60D', '&#x1F60E', '&#x1F60F'];
+        '&#x1F608', '&#x1F609', '&#x1F60A', '&#x1F60B', '&#x1F60C', '&#x1F60D', '&#x1F60E', '&#x1F60F', '&#x1F610', '&#x1F611',
+        '&#x1F612', '&#x1F613', '&#x1F614', '&#x1F615', '&#x1F616', '&#x1F617', '&#x1F618', '&#x1F619'];
     webSocket: WebSocket;
     retry = 1;
     chatroom: string;
@@ -32,7 +33,10 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
         merge(
             fromEvent(window, 'focus').pipe(mapTo(true))
-        ).subscribe(() => this.document.title = this.unread_msg_count = 0);
+        ).subscribe(() => {
+            this.unread_msg_count = 0;
+            this.document.title = 'chat';
+        });
 
         this.route.paramMap.subscribe(params => {
             this.chatroom = params.get('id');
@@ -43,6 +47,12 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             fromEvent(window, 'online').pipe(mapTo(true)),
             fromEvent(window, 'offline').pipe(mapTo(false))
         );
+
+        /**
+         * subscribe to the online observable
+         * if online return true, reinitialize socket
+         * else set isonline to false
+         */
         this.online.subscribe(online => {
             if (online) {
                 this.isonline = true;
@@ -77,6 +87,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     addEmoji(emoji) {
         this.msg += emoji;
     }
+
     /**
      * creates a new socket connection and adds event listeners to the socket
      */
@@ -141,9 +152,11 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     */
     updateChat(msg) {
         if (this.document.hasFocus()) {
-            this.document.title = this.unread_msg_count = 0;
+            this.unread_msg_count = 0;
+            this.document.title = `chat`;
         } else {
-            this.document.title = ++this.unread_msg_count;
+            this.unread_msg_count++;
+            this.document.title = `chat (${this.unread_msg_count})`;
         }
 
         if (msg.data instanceof Blob) {
