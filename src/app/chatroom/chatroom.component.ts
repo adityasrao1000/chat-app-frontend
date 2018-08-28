@@ -146,11 +146,10 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Update the chat-panel, and the list of connected users when the socket receives
-     *  a message from the server
-     * @param msg
-    */
-    updateChat(msg) {
+     * if the current tab is in focus then set undread message count variable to 0
+     * else increment the unread count anf update the document title with the count
+     */
+    tabInFocus() {
         if (this.document.hasFocus()) {
             this.unread_msg_count = 0;
             this.document.title = `chat`;
@@ -158,6 +157,16 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             this.unread_msg_count++;
             this.document.title = `chat (${this.unread_msg_count})`;
         }
+    }
+
+    /**
+     * Update the chat-panel, and the list of connected users when the socket receives
+     *  a message from the server
+     * @param msg
+    */
+    updateChat(msg) {
+        // check if tab is currently in focus
+        this.tabInFocus();
 
         if (msg.data instanceof Blob) {
             this.messages.push(window.URL.createObjectURL(msg.data));
