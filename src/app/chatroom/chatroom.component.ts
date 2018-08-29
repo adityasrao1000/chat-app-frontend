@@ -70,17 +70,24 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
 
     }
 
+    /**
+     * computes the date and time from a timestamp
+     * @param date type string
+     */
     toDate(date) {
         const d = new Date(date);
         return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
     }
+
     ngAfterViewInit() {
         /**
          * add change event listener to file input after its added to the markups
          */
         fromEvent(this.document.getElementById('file'), 'change')
             .subscribe(() => {
-                this.webSocket.send(this.document.getElementById('file').files[0]);
+                if (this.document.getElementById('file').files[0]) {
+                    this.webSocket.send(this.document.getElementById('file').files[0]);
+                }
             });
     }
 
@@ -143,9 +150,11 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
      * @param message
      */
     sendMessage(message) {
-        if (message !== '') {
-            this.webSocket.send(message);
-            this.msg = '';
+        if (message) {
+            if (message !== '') {
+                this.webSocket.send(message);
+                this.msg = '';
+            }
         }
     }
 
