@@ -23,7 +23,9 @@
           </article>
           <ng-template #other_content2>
             <div>
-              <p style="margin-bottom: 0;"> {{m.sender}} {{toDate(m.timestamp)}}</p>
+              <p style="margin-bottom: 0; font-weight: 600">
+                {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+              </p>
               <img class="img-fluid" [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
             </div>
           </ng-template>

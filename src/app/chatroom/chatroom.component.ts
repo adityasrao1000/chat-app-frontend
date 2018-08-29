@@ -86,7 +86,18 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
         fromEvent(this.document.getElementById('file'), 'change')
             .subscribe(() => {
                 if (this.document.getElementById('file').files[0]) {
-                    this.webSocket.send(this.document.getElementById('file').files[0]);
+                    if (this.document.getElementById('file').files[0].type.indexOf('image') > -1) {
+                        if (this.document.getElementById('file').files[0].size <= 15728640) {
+                            this.webSocket.send(this.document.getElementById('file').files[0]);
+                            this.document.getElementById('file').value = '';
+                        } else {
+                            this.document.getElementById('file').value = '';
+                            window.alert('file size too large');
+                        }
+                    } else {
+                        this.document.getElementById('file').value = '';
+                        alert('you can only share an image');
+                    }
                 }
             });
     }
