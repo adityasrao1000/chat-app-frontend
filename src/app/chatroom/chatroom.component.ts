@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/platform-browser';
 import { fromEvent, Observable, of, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { Message } from '../models/message';
 
 @Component({
     templateUrl: './chatroom.component.html',
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ChatRoomComponent implements OnInit, AfterViewInit {
 
     userList: string[] = [];
-    messages: string[] = [];
+    messages: Message[] = [];
     msg: string;
     smily = '&#x1F642';
     online: Observable<boolean>;
@@ -67,6 +68,11 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             }
         });
 
+    }
+
+    toDate(date) {
+        const d = new Date(date);
+        return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
     }
     ngAfterViewInit() {
         /**

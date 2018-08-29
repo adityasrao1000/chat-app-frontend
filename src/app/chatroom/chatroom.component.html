@@ -11,18 +11,21 @@
         <div *ngIf=" m.sender === 'Server';else other_content">
           <div class="server-message">
             <p>{{m.message}}</p>
-            <p style="margin-top: -5px">{{m.timestamp}}</p>
+            <p style="margin-top: -5px">{{toDate(m.timestamp)}}</p>
           </div>
         </div>
         <ng-template #other_content>
 
           <article *ngIf=" m.type === 'text';else other_content2">
             <b>{{m.sender}}</b>
-            <span class="timestamp">{{m.timestamp}}</span>
+            <span class="timestamp">{{toDate(m.timestamp)}}</span>
             <p [innerHTML]="m.message | sanitize"></p>
           </article>
           <ng-template #other_content2>
-            <img class="img-fluid" [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
+            <div>
+              <p style="margin-bottom: 0;"> {{m.sender}} {{toDate(m.timestamp)}}</p>
+              <img class="img-fluid" [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
+            </div>
           </ng-template>
         </ng-template>
       </div>
@@ -41,7 +44,8 @@
       </div>
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>
-    <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" (keydown.enter)="send()" placeholder="Type your message" autocomplete="off">
+    <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" (keydown.enter)="send()"
+      placeholder="Type your message" autocomplete="off">
     <div class="input-group-prepend">
       <div class="input-group-text clip">
         <i class="fa fa-paperclip" (click)="fileClick()"></i>
