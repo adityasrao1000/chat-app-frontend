@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="users" *ngIf="userList.length > 0">
     <p>
-      <i class="fa fa-circle"></i> &nbsp;
+       &nbsp;<i class="fa fa-circle"></i> &nbsp;
       <span class="username" *ngFor="let u of userList"> {{u}}</span>
     </p>
   </div>
@@ -16,7 +16,7 @@
         </div>
         <ng-template #other_content>
 
-          <article *ngIf=" m.type === 'text';else other_content2">
+          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}" *ngIf=" m.type === 'text';else other_content2">
             <b>{{m.sender}}</b>
             <span class="timestamp">{{toDate(m.timestamp)}}</span>
             <p [innerHTML]="m.message | sanitize"></p>
