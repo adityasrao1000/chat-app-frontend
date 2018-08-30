@@ -1,9 +1,9 @@
 import { Component, Inject, AfterViewInit, OnInit } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
 import { fromEvent, Observable, of, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from '../models/message';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     templateUrl: './chatroom.component.html',
@@ -26,6 +26,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     unread_msg_count: number;
     focus;
     username: string;
+
     constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
         // initialize variables
         this.unread_msg_count = 0;
