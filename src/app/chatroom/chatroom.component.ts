@@ -111,7 +111,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * appends an enoji to the message string
+     * appends an emoji to the message string
      * @param emoji
      */
     addEmoji(emoji) {
