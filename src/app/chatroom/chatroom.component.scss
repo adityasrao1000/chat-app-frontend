@@ -109,6 +109,14 @@ li {
   animation: enter .2s 1;
 }
 
+.user-img {
+  border-left: 5px solid #74a377;
+}
+
+.sender-img {
+  border-left: 5px solid #aaa;
+}
+
 .smily {
   cursor: pointer;
 
@@ -161,6 +169,9 @@ li {
   max-width: 25em;
   margin: .4em 0;
   width: 100%;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(145, 138, 145, 1);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(145, 138, 145, 1);
+  box-shadow: 0px 0px 7px 0px rgba(145, 138, 145, 1);
   animation: enter .2s 1;
 }
 
