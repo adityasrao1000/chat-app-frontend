@@ -86,27 +86,35 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
          */
         fromEvent(this.document.getElementById('file'), 'change')
             .subscribe(() => {
-                if (this.document.getElementById('file').files[0]) {
-                    if (this.document.getElementById('file').files[0].type.indexOf('image') > -1) {
-                        if (this.document.getElementById('file').files[0].size <= 15728640) {
-                            this.webSocket.send(this.document.getElementById('file').files[0]);
-                            this.document.getElementById('file').value = '';
+                const file = this.document.getElementById('file');
+                if (file.files[0]) {
+                    if (file.files[0].type.indexOf('image') > -1) {
+                        if (file.files[0].size <= 15728640) {
+                            this.webSocket.send(file.files[0]);
+                            file.value = '';
                         } else {
-                            this.document.getElementById('file').value = '';
+                            file.value = '';
+                            window.alert('file size too large');
+                        }
+                    } else if (file.files[0].type.indexOf('video') > -1) {
+                        if (file.files[0].size <= 15728640) {
+                            this.getBase64(file.files[0]);
+                        } else {
+                            file.value = '';
                             window.alert('file size too large');
                         }
                     } else {
-                        if (this.document.getElementById('file').files[0].size <= 15728640) {
-                            this.getBase64(this.document.getElementById('file').files[0]);
-                        } else {
-                            this.document.getElementById('file').value = '';
-                            window.alert('file size too large');
-                        }
+                        alert('file type not supported');
+                        file.value = '';
                     }
                 }
             });
     }
 
+    /**
+     * coverts a file into a base64 string and then sends it to the server
+     * @param file of type File
+     */
     getBase64(file) {
         if (file.type === 'video/3gpp') {
             alert(file.type + ' is not supported');
