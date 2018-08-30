@@ -1,8 +1,8 @@
 <div class="wrapper">
   <div class="users" *ngIf="userList.length > 0">
     <p>
-       &nbsp;<i class="fa fa-circle"></i> &nbsp;
-      <span class="username" *ngFor="let u of userList"> {{u}}</span>
+       &nbsp;<i class="fa fa-circle"></i>&nbsp;
+      <span class="username" *ngFor="let u of userList">{{u}}</span>
     </p>
   </div>
   <div id="chat">
@@ -10,8 +10,8 @@
       <div *ngFor="let m of messages">
         <div *ngIf=" m.sender === 'Server';else other_content">
           <div class="server-message">
-            <p>{{m.message}}</p>
-            <p style="margin-top: -5px">{{toDate(m.timestamp)}}</p>
+            <p><b>{{m.message}}</b></p>
+            <p style="margin-top: -5px; font-size: .86em"><b>{{toDate(m.timestamp)}}</b></p>
           </div>
         </div>
         <ng-template #other_content>
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()">send</button>
+      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
     </div>
   </div>
 </div>
