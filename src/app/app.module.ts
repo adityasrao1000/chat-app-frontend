@@ -6,6 +6,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize.pipe';
 import { ChatRoomComponent } from './chatroom/chatroom.component';
 import { AppRoutingModule } from './app.routing.module';
 import { SafeURLPipe } from './pipes/safeurl.pipe';
+import { EmojiService } from './services/emoji.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { SafeURLPipe } from './pipes/safeurl.pipe';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [EmojiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

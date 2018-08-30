@@ -28,14 +28,14 @@
               {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
-              [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
+              [src]="'data:image/png;base64,'+m.message | safeurl" (load)="mediaLoad()">
           </div>
 
           <div *ngIf="m.type.indexOf('video') > -1">
             <p style="margin-bottom: 0; font-weight: 600">
               {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
-            <video width="400" controls>
+            <video width="400" controls  (load)="mediaLoad()">
               <source [src]="m.message | safeurl" [type]="m.type">
               Your browser does not support HTML5 video.
             </video>

@@ -4,6 +4,7 @@ import { mapTo } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from '../models/message';
 import { DOCUMENT } from '@angular/common';
+import { EmojiService } from '../services/emoji.service';
 
 @Component({
     templateUrl: './chatroom.component.html',
@@ -17,20 +18,19 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     smily = '&#x1F642';
     online: Observable<boolean>;
     isonline: boolean;
-    emojis = ['&#x1F911', '&#x1F642', '&#x1F600', '&#x1F601', '&#x1F602', '&#x1F603', '&#x1F604', '&#x1F605', '&#x1F606', '&#x1F607',
-        '&#x1F608', '&#x1F609', '&#x1F60A', '&#x1F60B', '&#x1F60C', '&#x1F60D', '&#x1F60E', '&#x1F60F', '&#x1F610', '&#x1F611',
-        '&#x1F612', '&#x1F613', '&#x1F614', '&#x1F615', '&#x1F616', '&#x1F617', '&#x1F618', '&#x1F619'];
+    emojis: string[];
     webSocket: WebSocket;
-    retry = 1;
+    retry = 0;
     chatroom: string;
     unread_msg_count: number;
     focus;
     username: string;
 
-    constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
+    constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute, private emoji: EmojiService) {
         // initialize variables
         this.unread_msg_count = 0;
         this.msg = '';
+        this.emojis = this.emoji.getEmojis();
     }
 
     ngOnInit(): void {
@@ -172,8 +172,8 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             fromEvent(this.webSocket, 'close')
                 .subscribe(() => {
                     if (this.isonline) {
-                        if (this.retry <= 3) {
-                            console.log('trying to reconnect, attempt: ' + this.retry);
+                        if (this.retry < 3) {
+                            console.log('trying to reconnect, attempt: ' + (this.retry + 1));
                             this.retry++;
                             this.initializeSocket();
                         }
@@ -207,7 +207,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     /**
      * scrolls to the bottom of the chat box after image loads
      */
-    imageLoad() {
+    mediaLoad() {
         this.document.getElementById('scroll').scrollIntoView(true);
     }
 
