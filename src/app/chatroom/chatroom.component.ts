@@ -96,11 +96,37 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                             window.alert('file size too large');
                         }
                     } else {
-                        this.document.getElementById('file').value = '';
-                        alert('you can only share an image');
+                        if (this.document.getElementById('file').files[0].size <= 15728640) {
+                            this.getBase64(this.document.getElementById('file').files[0]);
+                        } else {
+                            this.document.getElementById('file').value = '';
+                            window.alert('file size too large');
+                        }
                     }
                 }
             });
+    }
+
+    getBase64(file) {
+        if (file.type === 'video/3gpp') {
+            alert(file.type + ' is not supported');
+            this.document.getElementById('file').value = '';
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        const self = this;
+        reader.onload = function () {
+            const obj = JSON.stringify({
+                type: self.document.getElementById('file').files[0].type,
+                file: reader.result
+            });
+            self.webSocket.send(obj);
+            self.document.getElementById('file').value = '';
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
     }
 
     /**

@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="users" *ngIf="userList.length > 0">
     <p>
-       &nbsp;<i class="fa fa-circle"></i>&nbsp;
+      &nbsp;<i class="fa fa-circle"></i>&nbsp;
       <span class="username" *ngFor="let u of userList">{{u}}</span>
     </p>
     <p class="chatroom-menu"><i class="fa fa-ellipsis-v"></i></p>
@@ -16,27 +16,37 @@
           </div>
         </div>
         <ng-template #other_content>
-
-          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}" *ngIf=" m.type === 'text';else other_content2">
+          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}"
+            *ngIf="m.type === 'text'">
             <b>{{m.sender}}</b>
             <span class="timestamp">{{toDate(m.timestamp)}}</span>
             <p [innerHTML]="m.message | sanitize"></p>
           </article>
-          <ng-template #other_content2>
-            <div>
-              <p style="margin-bottom: 0; font-weight: 600">
-                {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
-              </p>
-              <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}" [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
-            </div>
-          </ng-template>
+
+          <div *ngIf="m.type === 'image'">
+            <p style="margin-bottom: 0; font-weight: 600">
+              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            </p>
+            <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
+              [src]="'data:image/png;base64,'+m.message | safeurl" (load)="imageLoad()">
+          </div>
+
+          <div *ngIf="m.type.indexOf('video') > -1">
+            <p style="margin-bottom: 0; font-weight: 600">
+              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            </p>
+            <video width="400" controls>
+              <source [src]="m.message | safeurl" [type]="m.type">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
         </ng-template>
       </div>
       <div id="scroll"></div>
     </div>
   </div>
 </div>
-<input type="file" id="file" accept="image/*" [style.display]="'none'">
+<input type="file" id="file" [style.display]="'none'">
 <div id="chatControls">
   <div class="input-group">
     <div class="input-group-prepend clip smily">
@@ -55,7 +65,8 @@
       </div>
     </div>
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()"><i class="fa fa-paper-plane"
+          aria-hidden="true"></i></button>
     </div>
   </div>
 </div>
