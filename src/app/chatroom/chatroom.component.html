@@ -23,12 +23,12 @@
             <p [innerHTML]="m.message | sanitize"></p>
           </article>
 
-          <div *ngIf="m.type === 'image'">
+          <div *ngIf="m.type.indexOf('image') > -1">
             <p style="margin-bottom: 0; font-weight: 600">
               {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
-              [src]="'data:image/png;base64,'+m.message | safeurl" (load)="mediaLoad()">
+              [src]="m.message | safeurl" (load)="mediaLoad()">
           </div>
 
           <div *ngIf="m.type.indexOf('video') > -1">

@@ -90,7 +90,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 if (file.files[0]) {
                     if (file.files[0].type.indexOf('image') > -1) {
                         if (file.files[0].size <= 15728640) {
-                            this.webSocket.send(file.files[0]);
+                            this.getBase64(file.files[0]);
                             file.value = '';
                         } else {
                             file.value = '';
@@ -123,16 +123,15 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
         }
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        const self = this;
-        reader.onload = function () {
+        reader.onload = () => {
             const obj = JSON.stringify({
-                type: self.document.getElementById('file').files[0].type,
+                type: file.type,
                 file: reader.result
             });
-            self.webSocket.send(obj);
-            self.document.getElementById('file').value = '';
+            this.webSocket.send(obj);
+            this.document.getElementById('file').value = '';
         };
-        reader.onerror = function (error) {
+        reader.onerror = (error) => {
             console.log('Error: ', error);
         };
     }
@@ -234,6 +233,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
         // check if tab is currently in focus
         this.tabInFocus();
         const data = JSON.parse(msg.data);
+        console.log(data)
         this.messages.push(data);
         this.userList = [];
         data.userlist.forEach((user) => {

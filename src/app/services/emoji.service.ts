@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable()
 export class EmojiService {
     private readonly emojis = ['&#x1F911', '&#x1F642', '&#x1F600', '&#x1F601', '&#x1F602', '&#x1F603', '&#x1F604', '&#x1F605', '&#x1F606',
