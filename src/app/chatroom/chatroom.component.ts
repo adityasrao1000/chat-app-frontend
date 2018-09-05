@@ -95,7 +95,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 if (file.files[0]) {
                     if (file.files[0].type.indexOf('image') > -1) {
                         this.loading = true;
-                        console.log(this.webSocket.readyState);
                         this.webSocket.send(file.files[0]);
                         this.loading = false;
                         file.value = '';
@@ -144,7 +143,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                     } else {
                         this.loading = true;
                     }
-                }, 10);
+                }, 50);
             };
 
             /**

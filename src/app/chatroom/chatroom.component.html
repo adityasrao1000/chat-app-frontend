@@ -42,7 +42,7 @@
     </div>
   </div>
 </div>
-<input type="file" id="file" [style.display]="'none'">
+<input type="file" id="file" [disabled]="!isonline" [style.display]="'none'">
 <div id="chatControls">
   <div class="input-group">
     <div class="input-group-prepend clip smily">
@@ -53,7 +53,7 @@
       </div>
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>
-    <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" (keydown.enter)="send()"
+    <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" [disabled]="!isonline" (keydown.enter)="send()"
       placeholder="Type your message" autocomplete="off">
     <div class="input-group-prepend">
       <div class="input-group-text clip" *ngIf="!loading">
