@@ -33,18 +33,9 @@
               {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
-              [src]="m.message | safeurl" (load)="mediaLoad()">
+              [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
           </div>
 
-          <div *ngIf="m.type.indexOf('video') > -1">
-            <p style="margin-bottom: 0; font-weight: 600">
-              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
-            </p>
-            <video width="400" controls (load)="mediaLoad()">
-              <source [src]="m.message | safeurl" [type]="m.type">
-              Your browser does not support HTML5 video.
-            </video>
-          </div>
         </ng-template>
       </div>
       <div id="scroll"></div>
@@ -65,13 +56,17 @@
     <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" (keydown.enter)="send()"
       placeholder="Type your message" autocomplete="off">
     <div class="input-group-prepend">
-      <div class="input-group-text clip">
+      <div class="input-group-text clip" *ngIf="!loading">
         <i class="fa fa-paperclip" (click)="fileClick()"></i>
+      </div>
+      <div class="input-group-text clip" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin"></i>
       </div>
     </div>
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()"><i class="fa fa-paper-plane"
-          aria-hidden="true"></i></button>
+      <button class="btn btn-outline-secondary" type="button" id="send" (click)="send()">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
 </div>

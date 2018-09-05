@@ -25,12 +25,14 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     unread_msg_count: number;
     focus;
     username: string;
+    loading: boolean;
 
     constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute, private emoji: EmojiService) {
         // initialize variables
         this.unread_msg_count = 0;
         this.msg = '';
         this.emojis = this.emoji.getEmojis();
+        this.loading = false;
     }
 
     ngOnInit(): void {
@@ -49,6 +51,9 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             this.username = params.get('name');
         });
 
+        /**
+         *  create an observable to check if the app is online or offline
+         */
         this.online = merge(
             of(navigator.onLine),
             fromEvent(window, 'online').pipe(mapTo(true)),
@@ -89,51 +94,17 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 const file = this.document.getElementById('file');
                 if (file.files[0]) {
                     if (file.files[0].type.indexOf('image') > -1) {
-                        if (file.files[0].size <= 15728640) {
-                            this.getBase64(file.files[0]);
-                            file.value = '';
-                        } else {
-                            file.value = '';
-                            window.alert('file size too large');
-                        }
-                    } else if (file.files[0].type.indexOf('video') > -1) {
-                        if (file.files[0].size <= 15728640) {
-                            this.getBase64(file.files[0]);
-                        } else {
-                            file.value = '';
-                            window.alert('file size too large');
-                        }
-                    } else {
-                        alert('file type not supported');
+                        this.loading = true;
+                        console.log(this.webSocket.readyState);
+                        this.webSocket.send(file.files[0]);
+                        this.loading = false;
                         file.value = '';
+                    } else {
+                        file.value = '';
+                        alert('file type not supported');
                     }
                 }
             });
-    }
-
-    /**
-     * coverts a file into a base64 string and then sends it to the server
-     * @param file of type File
-     */
-    getBase64(file) {
-        if (file.type === 'video/3gpp') {
-            alert(file.type + ' is not supported');
-            this.document.getElementById('file').value = '';
-            return;
-        }
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const obj = JSON.stringify({
-                type: file.type,
-                file: reader.result
-            });
-            this.webSocket.send(obj);
-            this.document.getElementById('file').value = '';
-        };
-        reader.onerror = (error) => {
-            console.log('Error: ', error);
-        };
     }
 
     /**
@@ -157,13 +128,24 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     initializeSocket() {
         if ('WebSocket' in window) {
             console.log('initializing web socket');
-            this.webSocket = new WebSocket(`ws://038bb6db.ngrok.io/${this.chatroom}?name=${this.username}`);
+            this.webSocket = new WebSocket(`ws://localhost:4567/${this.chatroom}?name=${this.username}`);
 
             /**
              * event listener fires when the socket recieves a message from the server
              */
             fromEvent(this.webSocket, 'message')
                 .subscribe(msg => this.updateChat(msg));
+
+
+            this.webSocket.onopen = () => {
+                setInterval(() => {
+                    if (this.webSocket.bufferedAmount === 0) {
+                        this.loading = false;
+                    } else {
+                        this.loading = true;
+                    }
+                }, 10);
+            };
 
             /**
              * event listener fires when the socket connection is closed
