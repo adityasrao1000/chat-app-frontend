@@ -157,7 +157,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     initializeSocket() {
         if ('WebSocket' in window) {
             console.log('initializing web socket');
-            this.webSocket = new WebSocket(`ws://localhost:4567/${this.chatroom}?name=${this.username}`);
+            this.webSocket = new WebSocket(`ws://038bb6db.ngrok.io/${this.chatroom}?name=${this.username}`);
 
             /**
              * event listener fires when the socket recieves a message from the server
@@ -232,8 +232,8 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     updateChat(msg) {
         // check if tab is currently in focus
         this.tabInFocus();
+
         const data = JSON.parse(msg.data);
-        console.log(data)
         this.messages.push(data);
         this.userList = [];
         data.userlist.forEach((user) => {

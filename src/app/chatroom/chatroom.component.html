@@ -1,8 +1,14 @@
 <div class="wrapper">
-  <div class="users" *ngIf="userList.length > 0">
-    <p>
-      &nbsp;<i class="fa fa-circle"></i>&nbsp;
-      <span class="username" *ngFor="let u of userList">{{u}}</span>
+  <div class="users">
+    <p *ngIf="isonline">
+      <span *ngIf="userList.length > 0">
+        &nbsp;<i class="fa fa-circle"></i>&nbsp;
+        <span class="username" *ngFor="let u of userList">{{u}}</span>
+      </span>
+    </p>
+    <p *ngIf="!isonline">
+      &nbsp;<i class="fa fa-circle" style="color:red"></i>&nbsp;
+      <span class="username">offline</span>
     </p>
     <p class="chatroom-menu"><i class="fa fa-ellipsis-v"></i></p>
   </div>
@@ -16,8 +22,7 @@
           </div>
         </div>
         <ng-template #other_content>
-          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}"
-            *ngIf="m.type === 'text'">
+          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}" *ngIf="m.type === 'text'">
             <b>{{m.sender}}</b>
             <span class="timestamp">{{toDate(m.timestamp)}}</span>
             <p [innerHTML]="m.message | sanitize"></p>
@@ -35,7 +40,7 @@
             <p style="margin-bottom: 0; font-weight: 600">
               {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
-            <video width="400" controls  (load)="mediaLoad()">
+            <video width="400" controls (load)="mediaLoad()">
               <source [src]="m.message | safeurl" [type]="m.type">
               Your browser does not support HTML5 video.
             </video>
