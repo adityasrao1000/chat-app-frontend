@@ -93,14 +93,11 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
             .subscribe(() => {
                 const file = this.document.getElementById('file');
                 if (file.files[0]) {
-                    if (file.files[0].type.indexOf('image') > -1) {
-                        this.loading = true;
+                    if (file.files[0].size <= 15728640) {
                         this.webSocket.send(file.files[0]);
-                        this.loading = false;
                         file.value = '';
                     } else {
-                        file.value = '';
-                        alert('file type not supported');
+                        alert('file size too large');
                     }
                 }
             });

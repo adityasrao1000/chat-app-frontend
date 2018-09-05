@@ -36,6 +36,29 @@
               [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
           </div>
 
+          <div *ngIf="m.type.indexOf('video') > -1">
+            <p style="margin-bottom: 0; font-weight: 600">
+              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            </p>
+            <video controls>
+              <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" [type]="m.type" (load)="mediaLoad()">
+            </video>
+          </div>
+          <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type !== 'text'" class="other">
+            <p style="margin-bottom: 0; font-weight: 600">
+              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            </p>
+            <div class="other_file">
+              <br>
+              <b>Content type</b>
+              <p style="font-size: 600"><b>{{m.type}}</b></p>
+              <br>
+              <p>Download</p><br>
+              <a [href]="'data:application/octet-stream,'+m.message">
+                <p><i class="fa fa-arrow-circle-down"></i></p>
+              </a>
+            </div>
+          </div>
         </ng-template>
       </div>
       <div id="scroll"></div>
@@ -53,8 +76,8 @@
       </div>
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>
-    <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" [disabled]="!isonline" (keydown.enter)="send()"
-      placeholder="Type your message" autocomplete="off">
+    <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" [disabled]="!isonline"
+      (keydown.enter)="send()" placeholder="Type your message" autocomplete="off">
     <div class="input-group-prepend">
       <div class="input-group-text clip" *ngIf="!loading">
         <i class="fa fa-paperclip" (click)="fileClick()"></i>
