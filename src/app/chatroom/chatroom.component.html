@@ -54,7 +54,7 @@
               <p style="font-size: 600"><b>{{m.type}}</b></p>
               <br>
               <p>Download</p><br>
-              <a [href]="'data:application/octet-stream,'+m.message">
+              <a [type]="m.type" [href]="'data:application/octet-stream;base64,'+m.message | safeurl" target="_blank">
                 <p><i class="fa fa-arrow-circle-down"></i></p>
               </a>
             </div>
