@@ -70,9 +70,7 @@
   <div class="input-group">
     <div class="input-group-prepend clip smily">
       <div class="emojis-menu">
-        <div class="emoji" *ngFor="let e of emojis">
-          <p><span [innerHTML]="e" (click)="addEmoji(e)"></span></p>
-        </div>
+        <app-emojis></app-emojis>
       </div>
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>

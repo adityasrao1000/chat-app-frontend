@@ -7,13 +7,15 @@ import { ChatRoomComponent } from './chatroom/chatroom.component';
 import { AppRoutingModule } from './app.routing.module';
 import { SafeURLPipe } from './pipes/safeurl.pipe';
 import { EmojiService } from './services/emoji.service';
+import { EmojisComponent } from './emojis/emojis.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatRoomComponent,
     SanitizeHtmlPipe,
-    SafeURLPipe
+    SafeURLPipe,
+    EmojisComponent
   ],
   imports: [
     BrowserModule,

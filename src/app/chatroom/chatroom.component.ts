@@ -18,7 +18,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     smily = '&#x1F642';
     online: Observable<boolean>;
     isonline: boolean;
-    emojis: string[];
     webSocket: WebSocket;
     retry = 0;
     chatroom: string;
@@ -27,11 +26,10 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     username: string;
     loading: boolean;
 
-    constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute, private emoji: EmojiService) {
+    constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
         // initialize variables
         this.unread_msg_count = 0;
         this.msg = '';
-        this.emojis = this.emoji.getEmojis();
         this.loading = false;
     }
 
