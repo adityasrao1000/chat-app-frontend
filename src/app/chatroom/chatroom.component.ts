@@ -74,6 +74,10 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
 
     }
 
+    getEmoji(emoji) {
+        this.msg += emoji;
+    }
+
     /**
      * computes the date and time from a timestamp
      * @param date type string

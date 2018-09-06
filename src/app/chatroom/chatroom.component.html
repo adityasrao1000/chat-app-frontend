@@ -70,7 +70,7 @@
   <div class="input-group">
     <div class="input-group-prepend clip smily">
       <div class="emojis-menu">
-        <app-emojis></app-emojis>
+        <app-emojis (emoji)='getEmoji($event)'></app-emojis>
       </div>
       <span class="input-group-text " [innerHTML]="smily"></span>
     </div>

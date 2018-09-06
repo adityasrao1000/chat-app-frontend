@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { EmojiService } from '../services/emoji.service';
 
 @Component({
@@ -7,9 +7,14 @@ import { EmojiService } from '../services/emoji.service';
     styleUrls: ['./emojis.component.scss']
 })
 export class EmojisComponent {
+    @Output() emoji = new EventEmitter();
     emojis: string[] = [];
 
-    constructor(private emoji: EmojiService) {
-        this.emojis = this.emoji.getEmojis();
+    constructor(private emojiservice: EmojiService) {
+        this.emojis = this.emojiservice.getEmojis();
+    }
+
+    addEmoji(e: string) {
+      this.emoji.emit(e);
     }
 }
