@@ -29,33 +29,33 @@
           </article>
 
           <div *ngIf="m.type.indexOf('image') > -1">
-            <p style="margin-bottom: 0; font-weight: 600">
-              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            <p class="sender-details">
+              {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
               [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
           </div>
 
           <div *ngIf="m.type.indexOf('video') > -1">
-            <p style="margin-bottom: 0; font-weight: 600">
-              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            <p class="sender-details">
+              {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <video controls>
               <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" [type]="m.type" (load)="mediaLoad()">
             </video>
           </div>
           <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type !== 'text'" class="other">
-            <p style="margin-bottom: 0; font-weight: 600">
-              {{m.sender}} <span style="font-size: .9em;">&nbsp; {{toDate(m.timestamp)}}</span>
+            <p class="sender-details">
+              {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
-            <div class="other_file">
+            <div class="other_file" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}">
               <br>
               <b>Content type</b>
               <p style="font-size: 600"><b>{{m.type}}</b></p>
               <br>
               <p>Download</p><br>
               <a [type]="m.type" [href]="'data:application/octet-stream;base64,'+m.message | safeurl" target="_blank">
-                <p><i class="fa fa-arrow-circle-down"></i></p>
+                <p><i class="fa fa-download"></i></p>
               </a>
             </div>
           </div>

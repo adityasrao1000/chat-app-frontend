@@ -169,6 +169,15 @@ li {
   animation: enter .2s 1;
 }
 
+.sender-details {
+  margin-bottom: 0;
+  font-weight: 600 !important;
+
+  span {
+    font-size: .9em;
+  }
+}
+
 .img-fluid {
   max-width: 25em;
   margin: .4em 0;
@@ -190,26 +199,34 @@ video {
 
 .other {
   margin: 10px 0;
+}
 
-  .other_file {
-    width: 100%;
-    max-width: 400px;
-    height: 400px;
-    text-align: center;
-    background-color: whitesmoke;
-    border-radius: 3px;
-    margin: 10px 0;
-    margin-left: 2px;
-    -webkit-box-shadow: 0px 0px 7px 0px rgba(145, 138, 145, 1);
-    -moz-box-shadow: 0px 0px 7px 0px rgba(145, 138, 145, 1);
-    box-shadow: 0px 0px 7px 0px rgba(145, 138, 145, 1);
-    animation: enter .2s 1;
+.other_file {
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  text-align: center;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  margin: 10px 0;
+  margin-left: 2px;
+  animation: enter .2s 1;
+  position: relative;
 
-    .fa-arrow-circle-down {
-      color: grey;
-      cursor: pointer;
-      font-size: 6em;
-    }
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: 80px solid white;
+    border-left: 80px solid lightgrey;
+    width: 0;
+  }
+
+  .fa {
+    color: grey;
+    cursor: pointer;
+    font-size: 6em;
   }
 }
 

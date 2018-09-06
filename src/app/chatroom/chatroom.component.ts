@@ -4,7 +4,6 @@ import { mapTo } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from '../models/message';
 import { DOCUMENT } from '@angular/common';
-import { EmojiService } from '../services/emoji.service';
 
 @Component({
     templateUrl: './chatroom.component.html',
