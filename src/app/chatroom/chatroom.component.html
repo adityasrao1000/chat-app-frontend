@@ -41,7 +41,7 @@
               {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <video controls>
-              <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" [type]="m.type" (load)="mediaLoad()">
+              <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="video/mp4" (load)="mediaLoad()">
             </video>
           </div>
           <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type !== 'text'" class="other">

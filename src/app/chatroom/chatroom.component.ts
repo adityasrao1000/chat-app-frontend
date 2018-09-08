@@ -21,7 +21,6 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     retry = 0;
     chatroom: string;
     unread_msg_count: number;
-    focus;
     username: string;
     loading: boolean;
 

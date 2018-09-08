@@ -221,6 +221,9 @@ video {
     border-top: 80px solid white;
     border-left: 80px solid lightgrey;
     width: 0;
+    -webkit-box-shadow: -4px 4px 4px 0px rgba(222, 215, 222, 1);
+    -moz-box-shadow: -4px 4px 4px 0px rgba(222, 215, 222, 1);
+    box-shadow: -4px 4px 4px 0px rgba(222, 215, 222, 1);
   }
 
   .fa {
