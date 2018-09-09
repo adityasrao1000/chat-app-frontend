@@ -23,10 +23,12 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     unread_msg_count: number;
     username: string;
     loading: boolean;
+    max_message_stack: number;
 
     constructor(@Inject(DOCUMENT) private document: any, private route: ActivatedRoute) {
         // initialize variables
         this.unread_msg_count = 0;
+        this.max_message_stack = 0;
         this.msg = '';
         this.loading = false;
     }
@@ -203,14 +205,20 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Update the chat-panel, and the list of connected users when the socket receives
+     * Update the chat-panel, and the list of connected usersFf when the socket receives
      *  a message from the server
      * @param msg
     */
     updateChat(msg) {
         // check if tab is currently in focus
         this.tabInFocus();
+        this.max_message_stack++;
 
+        // if message array increases a certain limit pop message array
+        if (this.max_message_stack > 20) {
+            this.max_message_stack--;
+            this.messages.shift();
+        }
         const data = JSON.parse(msg.data);
         this.messages.push(data);
         this.userList = [];

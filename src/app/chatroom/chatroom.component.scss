@@ -213,6 +213,16 @@ video {
   animation: enter .2s 1;
   position: relative;
 
+  @media only screen and (max-width: 600px) {
+    max-width: 250px;
+    height: 250px;
+  }
+  .download-file{
+    margin-top: 40px;
+    @media only screen and (max-width: 600px) {
+      margin-top: -10px;
+    }
+  }
   &:before {
     content: '';
     position: absolute;
@@ -224,9 +234,14 @@ video {
     -webkit-box-shadow: -4px 4px 4px 0px rgba(222, 215, 222, 1);
     -moz-box-shadow: -4px 4px 4px 0px rgba(222, 215, 222, 1);
     box-shadow: -4px 4px 4px 0px rgba(222, 215, 222, 1);
+
+    @media only screen and (max-width: 600px) {
+      border-top: 50px solid white;
+      border-left: 50px solid lightgrey;
+    }
   }
 
-  .fa {
+  .fa-download {
     color: grey;
     cursor: pointer;
     font-size: 6em;

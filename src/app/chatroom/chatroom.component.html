@@ -53,10 +53,11 @@
               <b>Content type</b>
               <p style="font-size: 600"><b>{{m.type}}</b></p>
               <br>
-              <p>Download</p><br>
+              <div class="download-file">
               <a [type]="m.type" [href]="'data:application/octet-stream;base64,'+m.message | safeurl" target="_blank">
                 <p><i class="fa fa-download"></i></p>
               </a>
+            </div>
             </div>
           </div>
         </ng-template>
