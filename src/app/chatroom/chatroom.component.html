@@ -10,7 +10,6 @@
       &nbsp;<i class="fa fa-circle" style="color:red"></i>&nbsp;
       <span class="username">offline</span>
     </p>
-    <p class="chatroom-menu"><i class="fa fa-ellipsis-v"></i></p>
   </div>
   <div id="chat">
     <div id="msgs">
@@ -18,35 +17,36 @@
         <div *ngIf=" m.sender === 'Server';else other_content">
           <div class="server-message">
             <p><b>{{m.message}}</b></p>
-            <p style="margin-top: -5px; font-size: .86em"><b>{{toDate(m.timestamp)}}</b></p>
+            <p class="server-msg-time"><b>{{toDate(m.timestamp)}}</b></p>
           </div>
         </div>
         <ng-template #other_content>
-          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}" *ngIf="m.type === 'text'">
+          <article [ngClass]="{'user-article':m.sender === username, 'sender-article':m.sender !== username}"
+            *ngIf="m.type === 'text'">
             <b>{{m.sender}}</b>
             <span class="timestamp">{{toDate(m.timestamp)}}</span>
             <p [innerHTML]="m.message | sanitize"></p>
           </article>
 
-          <div *ngIf="m.type.indexOf('image') > -1">
-            <p class="sender-details">
-              {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
+          <div *ngIf="m.type.indexOf('image') > -1" class="message-wrapper">
+            <p class="sender-details" style="margin-bottom: -4px">
+              {{m.sender}} <span style="font-weight: 300">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
               [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
           </div>
 
-          <div *ngIf="m.type.indexOf('video') > -1">
+          <div *ngIf="m.type.indexOf('video') > -1" class="message-wrapper">
             <p class="sender-details">
-              {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
+              {{m.sender}} <span style="font-weight: 300">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <video controls>
               <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="video/mp4" (load)="mediaLoad()">
             </video>
           </div>
-          <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type !== 'text'" class="other">
-            <p class="sender-details">
-              {{m.sender}} <span>&nbsp; {{toDate(m.timestamp)}}</span>
+          <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type !== 'text'" class="other message-wrapper">
+            <p class="sender-details" style="margin-bottom: -8px">
+              &nbsp;{{m.sender}} <span style="font-weight: 300">&nbsp; {{toDate(m.timestamp)}}</span>
             </p>
             <div class="other_file" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}">
               <br>
@@ -54,10 +54,10 @@
               <p style="font-size: 600"><b>{{m.type}}</b></p>
               <br>
               <div class="download-file">
-              <a [type]="m.type" [href]="'data:application/octet-stream;base64,'+m.message | safeurl" target="_blank">
-                <p><i class="fa fa-download"></i></p>
-              </a>
-            </div>
+                <a [type]="m.type" [href]="'data:application/octet-stream;base64,'+m.message | safeurl" target="_blank">
+                  <p><i class="fa fa-download"></i></p>
+                </a>
+              </div>
             </div>
           </div>
         </ng-template>
