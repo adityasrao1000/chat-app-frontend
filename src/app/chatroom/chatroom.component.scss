@@ -23,16 +23,26 @@ li {
 #chatControls {
   position: fixed;
   bottom: 0;
-  height: 8%;
-  min-height: 60px;
+  height: 3.5em;
   padding: .6em;
-  background-clip: grey;
+  padding-top: 0.1em;
+  border-right: 1px solid rgb(247, 241, 241);
+  background-color: rgb(247, 241, 241);
   display: flex;
   width: 100%;
-  margin: 0 0 5px 0;
 
   .fa-paperclip {
     cursor: pointer;
+  }
+
+  button {
+    background: white;
+    border: 1px solid #ced4da;
+
+    &:focus {
+      color: rgb(243, 239, 239);
+      background: rgb(180, 177, 177);
+    }
   }
 }
 
@@ -40,17 +50,21 @@ li {
   position: fixed;
   display: flex;
   top: 0;
-  height: 6%;
+  right: 0;
+  z-index: 99;
+  border-right: 1px solid rgb(247, 241, 241);
+  background-color: rgb(247, 241, 241);
+  height: 2.5em;
   width: 100%;
   font-weight: 600;
-  min-height: 40px;
 
   .fa-circle {
     color: rgb(65, 245, 65);
   }
 
   p {
-    margin-top: 4px;
+    height: 100%;
+    margin-top: .45em;
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
@@ -71,11 +85,10 @@ li {
 }
 
 #chat {
-  position: fixed;
-  width: 99%;
-  margin-top: 30px;
-  height: 86%;
-  padding-right: 1em;
+  width: 100%;
+  padding-top: 2.3em;
+  padding-bottom: 3.5em;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 

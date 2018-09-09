@@ -2,12 +2,12 @@
   <div class="users">
     <p *ngIf="isonline">
       <span *ngIf="userList.length > 0">
-        &nbsp;<i class="fa fa-circle"></i>&nbsp;
+        &nbsp;&nbsp;&nbsp;<i class="fa fa-circle"></i>&nbsp;
         <span class="username" *ngFor="let u of userList">{{u}}</span>
       </span>
     </p>
     <p *ngIf="!isonline">
-      &nbsp;<i class="fa fa-circle" style="color:red"></i>&nbsp;
+      &nbsp;&nbsp;&nbsp;<i class="fa fa-circle" style="color:red"></i>&nbsp;
       <span class="username">offline</span>
     </p>
   </div>
