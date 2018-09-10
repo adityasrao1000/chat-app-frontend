@@ -16,8 +16,8 @@
       <div *ngFor="let m of messages">
         <div *ngIf=" m.sender === 'Server';else other_content">
           <div class="server-message">
-            <p><b>{{m.message}}</b></p>
-            <p class="server-msg-time"><b>{{toDate(m.timestamp)}}</b></p>
+            <span><b>{{m.message}}</b></span><br>
+            <span class="server-msg-time"><b>{{toDate(m.timestamp)}}</b></span>
           </div>
         </div>
         <ng-template #other_content>
@@ -27,7 +27,7 @@
               <b class="pad">{{m.sender}}</b>
               <span class="timestamp">{{toDate(m.timestamp)}}</span>
               <br>
-              <p style="margin-left: 10px; margin-top:5px" [innerHTML]="m.message | sanitize"></p>
+              <p class="message-body" [innerHTML]="m.message | sanitize"></p>
             </article>
           </div>
 
@@ -58,11 +58,9 @@
               </p>
               <div class="other_file" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}">
                 <b>Content type</b>
-                <p style="font-size: 600"><b>{{m.type}}</b></p>
+                <p>{{m.type}}</p>
                 <div class="download-file">
-                  <a [type]="m.type" [href]="'data:application/octet-stream;base64,'+m.message | safeurl" target="_blank">
-                    <p><i class="fa fa-download"></i></p>
-                  </a>
+                  <p><i class="fa fa-download" (click)="download('data:image/gif;base64,'+m.message, 'data', m.type)"></i></p>
                 </div>
               </div>
             </div>

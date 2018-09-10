@@ -100,6 +100,12 @@ input {
   font-size: 12px;
 }
 
+.message-body {
+  margin-left: 10px;
+  margin-right: 9px;
+  margin-top: 5px;
+}
+
 .sender-article {
   background: #f1f1f1;
   padding: 10px;
@@ -107,7 +113,6 @@ input {
   border-left: 5px solid #aaa;
   position: relative;
   word-wrap: break-word;
-  animation: enter .2s 1;
 }
 
 .user-article {
@@ -117,7 +122,6 @@ input {
   border-left: 5px solid #74a377;
   position: relative;
   word-wrap: break-word;
-  animation: enter .2s 1;
 }
 
 .smily {
@@ -150,14 +154,15 @@ input {
 .server-message {
   width: 100%;
   border-radius: .3em;
-  margin: .5em 0em;
+  margin: .4em 0em;
   background-color: rgb(182, 255, 182);
   text-align: center;
-  animation: enter .2s 1;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(168, 159, 168, 1);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(168, 159, 168, 1);
+  box-shadow: 0px 2px 5px 0px rgba(168, 159, 168, 1);
 
   .server-msg-time {
-    margin-top: -16px;
-    font-size: .86em;
+    font-size: .8em;
     font-weight: 300
   }
 }
@@ -170,6 +175,7 @@ input {
   width: 100%;
   font-weight: 600 !important;
   margin: .4em 0 0 .5em;
+
   span {
     font-size: .9em;
     text-align: right;
@@ -190,25 +196,34 @@ video {
   width: 100%;
   text-align: center;
   margin: .5em 0;
-  animation: enter .2s 1;
   position: relative;
 
   .fa-download {
     color: rgb(43, 32, 32);
     cursor: pointer;
-    font-size: 6em;
+    font-size: 4.5em;
   }
 }
 
 .speech-bubble-yours {
   position: relative;
-  background: #93dfe5;
-  margin: .5em 0;
-  border-radius: .4em;
+  background: rgb(241, 239, 239);
+  margin: .4em 0;
+  border-radius: 0 .4em .4em .4em;
   margin-left: 19px;
   min-width: 300px;
   max-width: 400px;
   min-height: 60px;
+  word-wrap: break-word;
+  animation: enter .2s 1;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(168, 159, 168, 1);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(168, 159, 168, 1);
+  box-shadow: 2px 2px 5px 0px rgba(168, 159, 168, 1);
+
+  @media only screen and (max-width: 600px) {
+    max-width: 80%;
+    min-width: 200px;
+  }
 
   .pad {
     position: absolute;
@@ -216,15 +231,19 @@ video {
   }
 }
 
+.sender-details{
+  width: 100%;
+  word-wrap: break-word;
+}
 .speech-bubble-yours:after {
   content: '';
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 10px;
   width: 0;
   height: 0;
   border: 20px solid transparent;
-  border-right-color: #93dfe5;
+  border-right-color: rgb(241, 239, 239);
   border-left: 0;
   border-top: 0;
   margin-top: -10px;
@@ -234,13 +253,23 @@ video {
 .speech-bubble-sender {
   position: relative;
   background: #a3eea3;
-  margin: .5em 0;
-  border-radius: .4em;
+  margin: .4em 0;
+  border-radius: .4em 0 .4em .4em;
   margin-right: 19px;
   right: 0;
   min-width: 300px;
   max-width: 400px;
   min-height: 60px;
+  word-wrap: break-word;
+  animation: enter .2s 1;
+  -webkit-box-shadow: -2px 2px 5px 0px rgba(168, 159, 168, 1);
+  -moz-box-shadow: -2px 2px 5px 0px rgba(168, 159, 168, 1);
+  box-shadow: -2px 2px 5px 0px rgba(168, 159, 168, 1);
+
+  @media only screen and (max-width: 600px) {
+    max-width: 80%;
+    min-width: 200px;
+  }
 
   .pad {
     position: absolute;
@@ -252,7 +281,7 @@ video {
   content: '';
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 10px;
   width: 0;
   height: 0;
   border: 20px solid transparent;
@@ -275,9 +304,10 @@ video {
   justify-content: flex-end;
 }
 
-.media{
+.media {
   padding: .4em;
 }
+
 @keyframes enter {
   from {
     transform: none;
