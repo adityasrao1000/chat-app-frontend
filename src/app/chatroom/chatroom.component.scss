@@ -35,7 +35,7 @@ input {
     background: white;
     border: 1px solid #ced4da;
 
-    &:focus {
+    &:focus, &:hover {
       color: rgb(243, 239, 239);
       background: rgb(180, 177, 177);
     }
@@ -238,7 +238,7 @@ video {
 
 .media-timestamp {
   font-weight: 300;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: .8em !important;
 }
 
