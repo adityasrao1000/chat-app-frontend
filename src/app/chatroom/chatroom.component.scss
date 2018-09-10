@@ -231,10 +231,17 @@ video {
   }
 }
 
-.sender-details{
+.sender-details {
   width: 100%;
   word-wrap: break-word;
 }
+
+.media-timestamp {
+  font-weight: 300;
+  white-space:nowrap;
+  font-size: .8em !important;
+}
+
 .speech-bubble-yours:after {
   content: '';
   position: absolute;
