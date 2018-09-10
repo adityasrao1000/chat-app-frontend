@@ -14,74 +14,83 @@
   <div id="chat">
     <div id="msgs">
       <div *ngFor="let m of messages">
-        <div *ngIf=" m.sender === 'Server';else other_content">
-          <div class="server-message">
-            <span><b>{{m.message}}</b></span><br>
-            <span class="server-msg-time"><b>{{toDate(m.timestamp)}}</b></span>
+
+        <div *ngIf="m.type === 'text'else other_type">
+          <div *ngIf=" m.sender === 'Server';else other_content">
+            <div class="server-message">
+              <span><b>{{m.message}}</b></span><br>
+              <span class="server-msg-time"><b>{{toDate(m.timestamp)}}</b></span>
+            </div>
           </div>
+          <ng-template #other_content>
+            <div [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+              <article [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}"
+                *ngIf="m.type === 'text'">
+                <b class="pad">{{m.sender}}</b>
+                <span class="timestamp">{{toDate(m.timestamp)}}</span>
+                <br>
+                <p class="message-body" [innerHTML]="m.message | sanitize"></p>
+              </article>
+            </div>
+          </ng-template>
         </div>
-        <ng-template #other_content>
-          <div [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
-            <article [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}"
-              *ngIf="m.type === 'text'">
-              <b class="pad">{{m.sender}}</b>
-              <span class="timestamp">{{toDate(m.timestamp)}}</span>
-              <br>
-              <p class="message-body" [innerHTML]="m.message | sanitize"></p>
-            </article>
-          </div>
+        <ng-template #other_type>
+          <!-- split the mime type and compare the first part to see if there is a match in the switch statement.
+               eg. (video/mp4).split('/')[0] -> video
+            -->
+          <div [ngSwitch]="m.type.split('/')[0]">
+            <div *ngSwitchCase="'image'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+              <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
+                <p class="sender-details" style="margin-bottom: -4px">
+                  {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                </p>
+                <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
+                  [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
+              </div>
+            </div>
 
-          <div *ngIf="m.type.indexOf('image') > -1" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
-            <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
-              <p class="sender-details" style="margin-bottom: -4px">
-                {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
-              </p>
-              <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
-                [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
+            <div *ngSwitchCase="'video'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+              <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
+                <p class="sender-details">
+                  {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                </p>
+                <video controls>
+                  <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="video/mp4" (load)="mediaLoad()">
+                </video>
+              </div>
             </div>
-          </div>
 
-          <div *ngIf="m.type.indexOf('video') > -1" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
-            <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
-              <p class="sender-details">
-                {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
-              </p>
-              <video controls>
-                <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="video/mp4" (load)="mediaLoad()">
-              </video>
+            <div *ngSwitchCase="'audio'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+              <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
+                <p class="sender-details">
+                  {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                </p>
+                <audio controls>
+                  <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="audio/mpeg" (load)="mediaLoad()">
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
             </div>
-          </div>
-          <div *ngIf="m.type.indexOf('audio') > -1" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
-            <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
-              <p class="sender-details">
-                {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
-              </p>
-              <audio controls>
-                <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="audio/mpeg" (load)="mediaLoad()">
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          </div>
-          <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type.indexOf('audio') <= -1 && m.type !== 'text'"
-            [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
-            <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
-              <p class="sender-details" style="margin-bottom: -8px">
-                &nbsp;{{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
-              </p>
-              <div class="other_file" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}">
-                <b>Content type</b>
-                <p>{{m.type}}</p>
-                <div class="download-file">
-                  <p><i class="fa fa-download" (click)="download('data:image/gif;base64,'+m.message, 'data', m.type)"></i></p>
+
+            <div *ngSwitchDefault [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+              <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
+                <p class="sender-details" style="margin-bottom: -8px">
+                  &nbsp;{{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                </p>
+                <div class="other_file" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}">
+                  <b>Content type</b>
+                  <p>{{m.type}}</p>
+                  <div class="download-file">
+                    <p><i class="fa fa-download" (click)="download('data:image/gif;base64,'+m.message, 'data', m.type)"></i></p>
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </ng-template>
       </div>
-      <div style="width:100%; height: 4em;">
-
-      </div>
+      <div style="width:100%; height: 4em;"></div>
       <div id="scroll"></div>
     </div>
 
