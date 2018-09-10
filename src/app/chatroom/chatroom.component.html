@@ -34,7 +34,7 @@
           <div *ngIf="m.type.indexOf('image') > -1" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
             <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
               <p class="sender-details" style="margin-bottom: -4px">
-                {{m.sender}} <span  class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
               </p>
               <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
                 [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
@@ -44,14 +44,26 @@
           <div *ngIf="m.type.indexOf('video') > -1" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
             <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
               <p class="sender-details">
-                {{m.sender}} <span  class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
               </p>
               <video controls>
                 <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="video/mp4" (load)="mediaLoad()">
               </video>
             </div>
           </div>
-          <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type !== 'text'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+          <div *ngIf="m.type.indexOf('audio') > -1" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
+            <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
+              <p class="sender-details">
+                {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+              </p>
+              <audio controls>
+                <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="audio/mpeg" (load)="mediaLoad()">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+          <div *ngIf="m.type.indexOf('video') <= -1 && m.type.indexOf('image') <= -1 && m.type.indexOf('audio') <= -1 && m.type !== 'text'"
+            [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
             <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
               <p class="sender-details" style="margin-bottom: -8px">
                 &nbsp;{{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
