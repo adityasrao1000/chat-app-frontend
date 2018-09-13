@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { SafeURLPipe } from '../pipes/safeurl.pipe';
 import { ActivatedRouteStub, ActivatedRoute } from '../activated.router.stub';
 import { Router } from '@angular/router';
+import { EmojisComponent } from '../emojis/emojis.component';
+import { EmojiService } from '../services/emoji.service';
 
 describe('ChatRoomComponent', () => {
   let activatedRoute: ActivatedRouteStub;
@@ -18,9 +20,11 @@ describe('ChatRoomComponent', () => {
       declarations: [
         ChatRoomComponent,
         SanitizeHtmlPipe,
+        EmojisComponent,
         SafeURLPipe
       ],
       providers: [
+        EmojiService,
         {
           provide: Router,
           useClass: class { navigate = jasmine.createSpy('navigate'); }
@@ -52,14 +56,31 @@ describe('ChatRoomComponent', () => {
     expect(app.sendMessage).toHaveBeenCalled();
   }));
 
-  it('sendMessage() should call webSocket.send()', async(() => {
+
+  it('initialize should be Undefined', async(() => {
     const fixture = TestBed.createComponent(ChatRoomComponent);
     const app = fixture.debugElement.componentInstance;
-    const spy = spyOn(app.webSocket, 'send').and.returnValue(true);
-    app.isonline = true;
-    app.sendMessage('hi');
     fixture.detectChanges();
-    expect(app.webSocket.send).toHaveBeenCalled();
+    expect(app.initialize).toBeUndefined();
+  }));
+
+  it('msg should be "" after message sent', async(() => {
+    const fixture = TestBed.createComponent(ChatRoomComponent);
+    const app = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
+    app.msg = 'hi';
+    spyOn(app.webSocket, 'send').and.returnValue(true);
+    app.sendMessage('hi how are you');
+    expect(app.msg).toBe('');
+  }));
+
+  it('updateChat should be called', async(() => {
+    const fixture = TestBed.createComponent(ChatRoomComponent);
+    const app = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
+    const message = new MessageEvent('fd');
+    app.updateChat(message);
+    expect(app.msg).toBe('');
   }));
 
 });

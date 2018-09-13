@@ -126,7 +126,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
     initializeSocket() {
         if ('WebSocket' in window) {
             console.log('initializing web socket');
-            this.webSocket = new WebSocket(`ws://localhost:4567/${this.chatroom}?name=${this.username}`);
+            this.webSocket = new WebSocket(`ws://localhost:4567/${this.chatroom}?username=${this.username}&password=123456`);
 
             /**
              * event listener fires when the socket recieves a message from the server

@@ -22,8 +22,9 @@ input {
   height: 3.5em;
   padding: .6em;
   padding-top: 0.1em;
-  border-right: 1px solid rgb(247, 241, 241);
-  background-color: rgb(247, 241, 241);
+  border-right: 1px solid #0f1011;
+  background-color: #0f1011;
+  color: white;
   display: flex;
   width: 100%;
 
@@ -31,11 +32,23 @@ input {
     cursor: pointer;
   }
 
-  button {
-    background: white;
-    border: 1px solid #ced4da;
+  input {
+    background-color: rgb(83, 81, 81);
+    color: lightgrey;
+    border: none;
 
-    &:focus, &:hover {
+    &::placeholder {
+      color: lightgrey;
+    }
+  }
+
+  button {
+    background: #0f1011;
+    border: none;
+    border-radius: 0;
+
+    &:focus,
+    &:hover {
       color: rgb(243, 239, 239);
       background: rgb(180, 177, 177);
     }
@@ -48,8 +61,9 @@ input {
   top: 0;
   right: 0;
   z-index: 99;
-  border-right: 1px solid rgb(247, 241, 241);
-  background-color: rgb(247, 241, 241);
+  border-right: 1px solid #0f1011;
+  background-color: #0f1011;
+  color: lightgrey;
   height: 2.5em;
   width: 100%;
   font-weight: 600;
@@ -72,10 +86,15 @@ input {
   }
 }
 
+.input-group-text {
+  border: none;
+}
+
 .clip {
   margin-top: 5px;
   height: 100%;
-  background: inherit;
+  background-color: rgb(83, 81, 81);
+  color: lightgrey;
   border-left: none;
   font-size: 1.5em;
 }
@@ -95,15 +114,13 @@ input {
 
 #chat .timestamp {
   position: absolute;
-  top: 10px;
+  top: 9px;
   right: 10px;
   font-size: 12px;
 }
 
 .message-body {
-  margin-left: 10px;
-  margin-right: 9px;
-  margin-top: 5px;
+  margin: 5px 9px 3px 10px;
 }
 
 .sender-article {
@@ -126,14 +143,15 @@ input {
 
 .smily {
   cursor: pointer;
+  background-color: inherit !important;
+
+  .icon {
+    font-size: .8em;
+  }
 
   &:hover .emojis-menu {
     display: block;
   }
-}
-
-.clip {
-  background-color: white;
 }
 
 .emojis-menu {
@@ -145,7 +163,7 @@ input {
   height: 220px;
   width: 240px;
   z-index: 2;
-  background-color: white;
+  background-color: inherit;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(153, 145, 153, 1);
   -moz-box-shadow: 0px 0px 5px 0px rgba(153, 145, 153, 1);
   box-shadow: 0px 0px 5px 0px rgba(153, 145, 153, 1);
@@ -155,11 +173,8 @@ input {
   width: 100%;
   border-radius: .3em;
   margin: .4em 0em;
-  background-color: rgb(182, 255, 182);
+  background-color: #FFF59D;
   text-align: center;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(168, 159, 168, 1);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(168, 159, 168, 1);
-  box-shadow: 0px 2px 5px 0px rgba(168, 159, 168, 1);
 
   .server-msg-time {
     font-size: .8em;
@@ -184,18 +199,20 @@ input {
 
 .img-fluid {
   width: 100%;
-  margin: .5em 0;
+  margin-top: .25em;
+  margin-bottom: .4em;
 }
 
 video {
   width: 100%;
-  margin: .5em 0;
 }
+
 audio {
   width: 100%;
   min-width: 285px;
   margin: .5em 0;
 }
+
 .other_file {
   width: 100%;
   text-align: center;
@@ -214,15 +231,12 @@ audio {
   background: rgb(241, 239, 239);
   margin: .4em 0;
   border-radius: 0 .4em .4em .4em;
-  margin-left: 19px;
-  min-width: 300px;
+  margin-left: 10px;
+  min-width: 200px;
   max-width: 400px;
   min-height: 60px;
   word-wrap: break-word;
   animation: enter .2s 1;
-  -webkit-box-shadow: 2px 2px 5px 0px rgba(168, 159, 168, 1);
-  -moz-box-shadow: 2px 2px 5px 0px rgba(168, 159, 168, 1);
-  box-shadow: 2px 2px 5px 0px rgba(168, 159, 168, 1);
 
   @media only screen and (max-width: 600px) {
     max-width: 80%;
@@ -253,12 +267,12 @@ audio {
   top: 10px;
   width: 0;
   height: 0;
-  border: 20px solid transparent;
+  border: 10px solid transparent;
   border-right-color: rgb(241, 239, 239);
   border-left: 0;
   border-top: 0;
   margin-top: -10px;
-  margin-left: -20px;
+  margin-left: -10px;
 }
 
 .speech-bubble-sender {
@@ -266,16 +280,13 @@ audio {
   background: #a3eea3;
   margin: .4em 0;
   border-radius: .4em 0 .4em .4em;
-  margin-right: 19px;
+  margin-right: 10px;
   right: 0;
-  min-width: 300px;
+  min-width: 200px;
   max-width: 400px;
   min-height: 60px;
   word-wrap: break-word;
   animation: enter .2s 1;
-  -webkit-box-shadow: -2px 2px 5px 0px rgba(168, 159, 168, 1);
-  -moz-box-shadow: -2px 2px 5px 0px rgba(168, 159, 168, 1);
-  box-shadow: -2px 2px 5px 0px rgba(168, 159, 168, 1);
 
   @media only screen and (max-width: 600px) {
     max-width: 80%;
@@ -295,12 +306,12 @@ audio {
   top: 10px;
   width: 0;
   height: 0;
-  border: 20px solid transparent;
+  border: 10px solid transparent;
   border-left-color: #a3eea3;
   border-right: 0;
   border-top: 0;
   margin-top: -10px;
-  margin-right: -20px;
+  margin-right: -10px;
 }
 
 .start {

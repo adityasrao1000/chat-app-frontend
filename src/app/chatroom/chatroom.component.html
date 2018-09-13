@@ -103,10 +103,10 @@
       <div class="emojis-menu">
         <app-emojis (emoji)='getEmoji($event)'></app-emojis>
       </div>
-      <span class="input-group-text " [innerHTML]="smily"></span>
+      <span class="input-group-text icon" [innerHTML]="smily" style="background-color: inherit"></span>
     </div>
     <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" [disabled]="!isonline"
-      (keydown.enter)="send()" placeholder="Type your message" autocomplete="off">
+      (keydown.enter)="send()" placeholder=" Type a message" autocomplete="off">
     <div class="input-group-prepend">
       <div class="input-group-text clip" *ngIf="!loading">
         <i class="fa fa-paperclip" (click)="fileClick()"></i>
