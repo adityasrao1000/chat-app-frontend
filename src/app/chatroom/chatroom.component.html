@@ -5,6 +5,7 @@
         &nbsp;&nbsp;&nbsp;<i class="fa fa-circle"></i>&nbsp;
         <span class="username" *ngFor="let u of userList">{{u}}</span>
       </span>
+      <span><i class="fa fa-ellipsis-v" (click)="toogleDetails()"></i></span>
     </p>
     <p *ngIf="!isonline">
       &nbsp;&nbsp;&nbsp;<i class="fa fa-circle" style="color:red"></i>&nbsp;
@@ -27,9 +28,8 @@
               <article [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}"
                 *ngIf="m.type === 'text'">
                 <b class="pad">{{m.sender}}</b>
-                <span class="timestamp">{{toDate(m.timestamp)}}</span>
-                <br>
                 <p class="message-body" [innerHTML]="m.message | sanitize"></p>
+                <p class="timestamp">{{toDate(m.timestamp)}}</p>
               </article>
             </div>
           </ng-template>
@@ -121,4 +121,8 @@
       </button>
     </div>
   </div>
+</div>
+
+<div class="chatroom-details" *ngIf="showDetails">
+<app-maps></app-maps>
 </div>
