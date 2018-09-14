@@ -8,8 +8,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { SafeURLPipe } from './pipes/safeurl.pipe';
 import { EmojiService } from './services/emoji.service';
 import { EmojisComponent } from './emojis/emojis.component';
-import { GooglemapsComponent } from './maps/googlemaps.component';
-import { AgmCoreModule } from '@agm/core';
+import { DetailsComponent } from './details/details.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +17,10 @@ import { AgmCoreModule } from '@agm/core';
     SanitizeHtmlPipe,
     SafeURLPipe,
     EmojisComponent,
-    GooglemapsComponent
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyA7VDW33OiBooHoEpzCYYc2iDb7wTKf1U8'
-    }),
     AppRoutingModule,
     FormsModule
   ],

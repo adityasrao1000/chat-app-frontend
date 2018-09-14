@@ -1,11 +1,11 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
-    selector: 'app-maps',
-    templateUrl: './googlemaps.component.html',
-    styleUrls: ['./googlemaps.component.scss']
+    selector: 'app-details',
+    templateUrl: './details.component.html',
+    styleUrls: ['./details.component.scss']
 })
-export class GooglemapsComponent {
+export class DetailsComponent {
     @Input() users: string[] = [];
     lat = 41.40338;
     lng = 2.17403;
