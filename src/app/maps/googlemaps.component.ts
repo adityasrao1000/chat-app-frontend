@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
     selector: 'app-maps',
@@ -6,6 +6,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./googlemaps.component.scss']
 })
 export class GooglemapsComponent {
+    @Input() users: string[] = [];
     lat = 41.40338;
     lng = 2.17403;
 }

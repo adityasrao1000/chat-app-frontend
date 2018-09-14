@@ -3,7 +3,7 @@
     <p *ngIf="isonline">
       <span *ngIf="userList.length > 0">
         &nbsp;&nbsp;&nbsp;<i class="fa fa-circle"></i>&nbsp;
-        <span class="username" *ngFor="let u of userList">{{u}}</span>
+        <span class="username"> {{chatroom}}</span>
       </span>
       <span><i class="fa fa-ellipsis-v" (click)="toogleDetails()"></i></span>
     </p>
@@ -27,7 +27,8 @@
             <div [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
               <article [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}"
                 *ngIf="m.type === 'text'">
-                <b class="pad">{{m.sender}}</b>
+                <b *ngIf="m.sender === username" class="pad">you</b>
+                <b *ngIf="m.sender !== username" class="pad">{{m.sender}}</b>
                 <p class="message-body" [innerHTML]="m.message | sanitize"></p>
                 <p class="timestamp">{{toDate(m.timestamp)}}</p>
               </article>
@@ -124,5 +125,5 @@
 </div>
 
 <div class="chatroom-details" *ngIf="showDetails">
-<app-maps></app-maps>
+  <app-maps [users]="userList"></app-maps>
 </div>

@@ -68,6 +68,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit {
                 this.initializeSocket();
             } else {
                 this.isonline = false;
+                this.webSocket.close();
             }
         });
 
