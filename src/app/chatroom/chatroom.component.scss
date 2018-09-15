@@ -32,6 +32,10 @@ input {
     cursor: pointer;
   }
 
+  .fa-send {
+    font-size: 2em;
+  }
+
   input {
     background-color: rgb(83, 81, 81);
     color: lightgrey;
@@ -98,21 +102,26 @@ input {
   border: none;
 }
 
+.clip {
+  margin-top: 5px;
+  height: 100%;
+  font-size: 1.5em;
+  border-left: none;
+
+  .clip-body {
+    background-color: rgb(83, 81, 81);
+    font-size: 1em;
+    color: lightgrey;
+    border-left: none;
+  }
+}
+
 .chatroom-details {
   position: fixed;
   background-color: #31353a;
   top: 0;
   width: 100%;
   height: 100%;
-}
-
-.clip {
-  margin-top: 5px;
-  height: 100%;
-  background-color: rgb(83, 81, 81);
-  color: lightgrey;
-  border-left: none;
-  font-size: 1.5em;
 }
 
 #chat {
@@ -140,7 +149,7 @@ input {
 
 .message-body {
   line-height: 1em;
-  margin: 0px 9px 3px 10px;
+  margin: 2px 9px 3px 10px;
 }
 
 .sender-article {
@@ -236,11 +245,24 @@ audio {
 .other_file {
   width: 100%;
   text-align: center;
-  margin: .5em 0;
+  margin: .2em 0;
   position: relative;
 
+  .download-file {
+    margin-top: -5px;
+  }
+
+  p {
+    font-size: 12px;
+  }
+
+  .media-timestamp {
+    margin-top: 0px;
+    margin-right: -2px;
+  }
+
   .fa-download {
-    color: rgb(43, 32, 32);
+    color: rgb(19, 11, 11);
     cursor: pointer;
     font-size: 4.5em;
   }

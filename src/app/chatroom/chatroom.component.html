@@ -43,7 +43,8 @@
             <div *ngSwitchCase="'image'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
               <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
                 <p class="sender-details" style="margin-bottom: -4px">
-                  {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                  <span *ngIf="m.sender !== username">{{m.sender}}</span> <span class="media-timestamp">&nbsp;
+                    {{toDate(m.timestamp)}}</span>
                 </p>
                 <img class="img-fluid" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}"
                   [src]="'data:image/jpeg;base64,' + m.message | safeurl" (load)="mediaLoad()">
@@ -53,7 +54,8 @@
             <div *ngSwitchCase="'video'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
               <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
                 <p class="sender-details">
-                  {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                  <span *ngIf="m.sender !== username">{{m.sender}}</span> <span class="media-timestamp">&nbsp;
+                    {{toDate(m.timestamp)}}</span>
                 </p>
                 <video controls>
                   <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="video/mp4" (load)="mediaLoad()">
@@ -64,7 +66,8 @@
             <div *ngSwitchCase="'audio'" [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
               <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
                 <p class="sender-details">
-                  {{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                  <span *ngIf="m.sender !== username">{{m.sender}}</span> <span class="media-timestamp">&nbsp;
+                    {{toDate(m.timestamp)}}</span>
                 </p>
                 <audio controls>
                   <source [src]="'data:'+m.type+';base64,' + m.message | safeurl" type="audio/mpeg" (load)="mediaLoad()">
@@ -75,15 +78,15 @@
 
             <div *ngSwitchDefault [ngClass]="{'end':m.sender === username, 'start':m.sender !== username}">
               <div [ngClass]="{'speech-bubble-sender':m.sender === username, 'speech-bubble-yours':m.sender !== username}">
-                <p class="sender-details" style="margin-bottom: -8px">
-                  &nbsp;{{m.sender}} <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
+                <p class="sender-details">
+                  <span *ngIf="m.sender !== username">{{m.sender}}</span>
                 </p>
                 <div class="other_file" [ngClass]="{'user-img':m.sender === username, 'sender-img':m.sender !== username}">
-                  <b>Content type</b>
                   <p>{{m.type}}</p>
                   <div class="download-file">
                     <p><i class="fa fa-download" (click)="download('data:image/gif;base64,'+m.message, 'data', m.type)"></i></p>
                   </div>
+                  <span class="media-timestamp">&nbsp; {{toDate(m.timestamp)}}</span>
                 </div>
               </div>
             </div>
@@ -108,11 +111,11 @@
     </div>
     <input type="text" class="form-control" accept-charset="utf-8" [(ngModel)]="msg" [disabled]="!isonline"
       (keydown.enter)="send()" placeholder=" Type a message" autocomplete="off">
-    <div class="input-group-prepend">
-      <div class="input-group-text clip" *ngIf="!loading">
+    <div class="clip input-group-prepend">
+      <div class="input-group-text clip-body" *ngIf="!loading">
         <i class="fa fa-paperclip" (click)="fileClick()"></i>
       </div>
-      <div class="input-group-text clip" *ngIf="loading">
+      <div class="input-group-text clip-body" *ngIf="loading">
         <i class="fa fa-spinner fa-spin"></i>
       </div>
     </div>
